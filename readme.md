@@ -9,8 +9,6 @@ cd target/
 java -jar WebSocket-JAVA-demo-1.jar  
 
 # 使用说明
-
-###配置参数
 | 名称| 说明|
 |----|----|
 |accessKey |用户accessKey|
