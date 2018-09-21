@@ -1,6 +1,7 @@
 package com.huobi.demo;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -14,11 +15,25 @@ public class Bootstrap {
   }
 
 
+  @Value("${uri.ao.path}")
+  String aO;
+
+  @Value("${uri.market.path}")
+  String market;
+
   @Autowired
   Client client;
 
+
+
   @PostConstruct
   private void init() {
-    client.connect();
+
+    //行情websocket
+    client.connect(market);
+
+
+    //账号及订单websocket
+//    client.connect(aO);
   }
 }

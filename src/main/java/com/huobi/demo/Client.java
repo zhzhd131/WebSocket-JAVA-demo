@@ -3,6 +3,7 @@ package com.huobi.demo;
 
 import org.java_websocket.client.DefaultSSLWebSocketClientFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 import javax.net.ssl.SSLContext;
@@ -14,9 +15,11 @@ import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.X509Certificate;
 
-@Service
-public class Client {
+import static org.springframework.beans.factory.config.BeanDefinition.SCOPE_PROTOTYPE;
 
+@Service
+@Scope(SCOPE_PROTOTYPE)
+public class Client {
 
   @Value("${uri.protocol}")
   String protocol;
@@ -24,11 +27,15 @@ public class Client {
   @Value("${uri.host}")
   String host;
 
-  @Value("${uri.path}")
-  String path;
+  @Value("${uri.ao.path}")
+  String aO;
+
+  @Value("${uri.market.path}")
+  String market;
 
   @Value("${uri.port}")
   String port;
+
 
   @Value("${accessKey}")
   String accessKey;
@@ -37,7 +44,7 @@ public class Client {
   String secretKey;
 
 
-  public void connect() {
+  public void connect(String path) {
     WebSocket webSocket = null;
     try {
       URI uri = new URI(protocol + host + ":" + port + path);
