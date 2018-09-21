@@ -5,7 +5,9 @@ jdk 1.8
 
 cd 项目路径
 mvn clean package -Dmaven.test.skip=true
+
 cd target/
+
 java -jar WebSocket-JAVA-demo-1.jar  
 
 # 使用说明
