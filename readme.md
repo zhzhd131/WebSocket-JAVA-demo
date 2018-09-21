@@ -16,7 +16,7 @@ java -jar WebSocket-JAVA-demo-1.jar
 
 
 
-# 使用说明
+# application.properties参数说明
 | 名称| 说明|
 |----|----|
 |accessKey |用户accessKey|
