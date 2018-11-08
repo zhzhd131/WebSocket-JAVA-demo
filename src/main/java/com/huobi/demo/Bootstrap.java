@@ -46,7 +46,7 @@ public class Bootstrap {
   @PostConstruct
   private void init() {
     try {
-      URI uri = new URI(protocol + host + ":" + port + market);
+      URI uri = new URI(protocol + host + ":" + port + aO);
       WebSocketClient ws = new WebSocketAccountsAndOrders(uri, accessKey, secretKey);
 
       client.connect(ws);
