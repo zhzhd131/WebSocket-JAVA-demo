@@ -1,11 +1,14 @@
 package com.huobi.demo;
 
+import org.java_websocket.client.WebSocketClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import javax.annotation.PostConstruct;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 @SpringBootApplication
 public class Bootstrap {
@@ -14,12 +17,26 @@ public class Bootstrap {
     SpringApplication.run(Bootstrap.class, args);
   }
 
+  @Value("${uri.protocol:wss://}")
+  String protocol;
 
-  @Value("${uri.ao.path}")
+  @Value("${uri.host:api.huobi.pro}")
+  String host;
+
+  @Value("${uri.port:443}")
+  String port;
+
+  @Value("${uri.ao.path:/ws/v1}")
   String aO;
 
-  @Value("${uri.market.path}")
+  @Value("${uri.market.path:/ws}")
   String market;
+
+  @Value("${accessKey}")
+  String accessKey;
+
+  @Value("${secretKey}")
+  String secretKey;
 
   @Autowired
   Client client;
@@ -28,12 +45,17 @@ public class Bootstrap {
 
   @PostConstruct
   private void init() {
+    try {
+      URI uri = new URI(protocol + host + ":" + port + market);
+      WebSocketClient ws = new WebSocketAccountsAndOrders(uri, accessKey, secretKey);
 
-    //行情websocket
-    client.connect(market);
+      client.connect(ws);
+    } catch (URISyntaxException e) {
+      e.printStackTrace();
+    }
 
 
-    //账号及订单websocket
-//    client.connect(aO);
+//    账号及订单websocket
+
   }
 }
